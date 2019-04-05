@@ -1,0 +1,12 @@
+Index: git/base/framework/DeviceComponent.cpp
+===================================================================
+--- git.orig/base/framework/DeviceComponent.cpp
++++ git/base/framework/DeviceComponent.cpp
+@@ -23,6 +23,7 @@
+ #include <signal.h>
+ #include <sys/signalfd.h>
+ #include <dlfcn.h>
++#include <boost/scoped_ptr.hpp>
+ 
+ #include "sca/DeviceComponent.h"
+ 
