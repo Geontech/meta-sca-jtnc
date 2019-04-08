@@ -61,6 +61,7 @@ SRC_URI_append = "\
     file://0005-scahome-global-prefix.patch \
     file://0006-devicecomponent_scoped_ptr.patch \
     file://0007-noinst-test.patch \
+    file://0008-python-setup.py.patch \
 "
 
 S = "${SCA_JTNC_BASEDIR}"
