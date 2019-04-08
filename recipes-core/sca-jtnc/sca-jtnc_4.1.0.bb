@@ -44,7 +44,11 @@ RDEPENDS_${PN} += "\
     python-resource ossp-uuid \
     "
 
-SRC_URI = "git://github.com/geontech/${PN};protocol=https"
+SRC_URI = "\
+    git://github.com/geontech/${PN};protocol=https \
+    file://etc \
+    "
+
 SRCREV = "3a6df1a7658bc821d36ce1042877ddac1d859bb8"
 SCA_JTNC_BASEDIR = "${WORKDIR}/git"
 
@@ -97,6 +101,7 @@ FILES_${PN} = " \
     ${SCAHOME}/lib/python \
     ${SCAROOT}/dom \
     ${SCAROOT}/dev \
+    ${sysconfdir} \
 "
 
 FILES_${PN}-dbg += " \
@@ -122,4 +127,13 @@ do_install_append () {
     install -d ${D}${SCAROOT}/dom/mgr
     install -d ${D}${SCAROOT}/dom/components
     install -d ${D}${SCAROOT}/dom/waveforms
+
+    # SCA-JTNC does not include the /etc/profile.d or /etc/ld.so.conf.d at this time
+    # and each needs to be patched for the destination environment.
+    install -Dm 0644 ${WORKDIR}/etc/profile.d/scahome.sh ${D}${sysconfdir}/profile.d/scahome.sh
+    install -Dm 0644 ${WORKDIR}/etc/profile.d/scaroot.sh ${D}${sysconfdir}/profile.d/scaroot.sh
+    install -Dm 0644 ${WORKDIR}/etc/ld.so.conf.d/sca.conf ${D}${sysconfdir}/ld.so.conf.d/sca.conf
+    sed -i "s|SCAHOME_BB|"${SCAHOME}"|g" ${D}${sysconfdir}/profile.d/scahome.sh
+    sed -i "s|SCAROOT_BB|"${SCAROOT}"|g" ${D}${sysconfdir}/profile.d/scaroot.sh
+    sed -i "s|SCAHOME_BB|"${SCAHOME}"|g" ${D}${sysconfdir}/ld.so.conf.d/sca.conf
 }
