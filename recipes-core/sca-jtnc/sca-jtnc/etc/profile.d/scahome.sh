@@ -27,12 +27,16 @@ if [ "X$SCAHOME" = X ] ; then
     if [ "X$LD_LIBRARY_PATH" != X ]; then
         LD_LIBRARY_PATH=:${LD_LIBRARY_PATH}
     fi
-    export LD_LIBRARY_PATH=${SCAHOME}/lib${LD_LIBRARY_PATH}
+    export LD_LIBRARY_PATH=${SCAHOME}/lib:${SCAHOME}/lib64${LD_LIBRARY_PATH}
+    if [ "X$PKG_CONFIG_PATH" != X ]; then
+        PKG_CONFIG_PATH=:${PKG_CONFIG_PATH}
+    fi
+    export PKG_CONFIG_PATH=${SCAHOME}/lib/pkgconfig:${SCAHOME}/lib64/pkgconfig${PKG_CONFIG_PATH}
     if [ "X$PYTHONPATH" != X ]; then
         PYTHONPATH=:${PYTHONPATH}
     fi
     export PYTHONPATH=${SCAHOME}/lib64/python:${SCAHOME}/lib/python${PYTHONPATH}
 fi
 if [ "X$LD_LIBRARY_PATH" = X ] ; then
-    export LD_LIBRARY_PATH=${SCAHOME}/lib
+    export LD_LIBRARY_PATH=${SCAHOME}/lib64
 fi
