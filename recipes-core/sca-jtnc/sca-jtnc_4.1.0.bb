@@ -49,20 +49,8 @@ SRC_URI = "\
     file://etc \
     "
 
-SRCREV = "3a6df1a7658bc821d36ce1042877ddac1d859bb8"
+SRCREV = "34f312e6f82ed7fef8edd824a2b7a10172d64b26"
 SCA_JTNC_BASEDIR = "${WORKDIR}/git"
-
-# Patches
-SRC_URI_append = "\
-    file://0001-allow_idl_dir_set.patch \
-    file://0002-Fix_Idl_prefix.patch \
-    file://0003-include_scoped_ptr.patch \
-    file://0004-acinclude_ossie_vs_sca.patch \
-    file://0005-scahome-global-prefix.patch \
-    file://0006-devicecomponent_scoped_ptr.patch \
-    file://0007-noinst-test.patch \
-    file://0008-python-setup.py.patch \
-"
 
 S = "${SCA_JTNC_BASEDIR}"
 
@@ -80,6 +68,10 @@ EXTRA_OECONF += "\
     idldir=${STAGING_DATADIR}/idl/omniORB \
     OMNIORB_INCLUDEDIR=${STAGING_INCDIR} \
     OMNICOS_IDLDIR=${STAGING_DATADIR}/idl/omniORB/COS \
+    "
+
+CACHED_CONFIGUREVARS += "\
+    ac_cv_pymod_jinja2=yes \
     "
 
 # Autoreconf fails without these
@@ -119,6 +111,9 @@ FILES_${PN}-staticdev = " \
     ${SCAHOME}/lib/*.a \
     ${SCAHOME}/lib/*.la \
 "
+
+PYTHON_SITEPACKAGES_DIR = "${SCAHOME}/lib/python"
+DISTUTILS_INSTALL_ARGS = "--prefix=${D}/${SCAHOME}"
 
 do_install_append () {
     # TODO: REMOVE this once assets are being installed as part of this package.
