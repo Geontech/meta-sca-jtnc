@@ -44,8 +44,22 @@ RDEPENDS_${PN} += "\
     python-resource ossp-uuid \
     "
 
+BBCLASSEXTEND = "native"
+DEPENDS_class-native += "\
+    omniorb-native omnievents-native omniorbpy-native \
+    expat-native \
+    xsd-native \
+    apr-native apr-util-native \
+    log4cxx-native \
+    boost-native \
+    python-native python-jinja2-native python-setuptools-native \
+    ossp-uuid-native \
+    e2fsprogs-native \
+    zip-native \
+    "
+
 SRC_URI = "\
-    git://github.com/geontech/${PN};protocol=https \
+    git://github.com/geontech/sca-jtnc;protocol=https \
     file://etc \
     "
 
@@ -80,7 +94,7 @@ ac_meta_files () {
 }
 do_unpack[postfuncs] += "ac_meta_files"
 
-CXXFLAGS += "-fpermissive -std=gnu++98"
+CXXFLAGS_append = " -fpermissive -std=gnu++98"
 
 # Skips for non-standard libdir location (in SCAHOME)
 INSANE_SKIP_${PN} += "libdir"
